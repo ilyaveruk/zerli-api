@@ -20,6 +20,7 @@ public class FlowerController {
         this.flowerService = flowerService;
     }
 
+
     @GetMapping("/flowers")
     public List<Flower> getAllFlowers() {
         return flowerService.getAllFlowers();
@@ -31,13 +32,5 @@ public class FlowerController {
         return ResponseEntity.ok(flower);
     }
 
-
-
-
-    @CrossOrigin(origins = "http://localhost:3000/flowers/images")
-    @GetMapping("/flowers/images")
-    public List<byte[]> getAllImages() {
-        return flowerService.getAllImages();
-    }
 
 }

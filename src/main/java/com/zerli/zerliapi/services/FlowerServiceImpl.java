@@ -6,8 +6,6 @@ import com.zerli.zerliapi.repository.FlowerRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
-import java.sql.Blob;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,7 +22,7 @@ public class FlowerServiceImpl implements FlowerService {
     public List<Flower> getAllFlowers() {
         List<FlowerEntity> flowerEntities = flowerRepository.findAll();
         return flowerEntities.stream().map(
-                flower -> new Flower(flower.getId(), flower.getDescription(), flower.getPrice())).collect(Collectors.toList());
+                flower -> new Flower(flower.getId(), flower.getDescription(), flower.getPrice(), flower.getImage())).collect(Collectors.toList());
 
     }
 
@@ -38,10 +36,5 @@ public class FlowerServiceImpl implements FlowerService {
         return flower;
     }
 
-    @Override
-    public List<byte[]> getAllImages() {
-        List<byte[]> flowerImages = flowerRepository.getAllImages();
-        return new ArrayList<>(flowerImages);
-    }
 
 }

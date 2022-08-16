@@ -5,12 +5,12 @@ import lombok.Data;
 
 
 import javax.persistence.*;
-import java.sql.Blob;
+
 
 
 @Entity
 @Data
-@Table(name="flowers")
+@Table(name = "flowers")
 public class FlowerEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface FlowerService {
     List<Flower> getAllFlowers();
+
     Flower getFlowerById(Long id);
 
-    List<byte[]> getAllImages();
 }
