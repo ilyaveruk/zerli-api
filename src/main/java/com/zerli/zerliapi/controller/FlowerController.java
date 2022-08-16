@@ -6,6 +6,7 @@ import com.zerli.zerliapi.services.FlowerService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Blob;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -28,6 +29,15 @@ public class FlowerController {
     public ResponseEntity<Flower> getFlowerById(@PathVariable Long id) {
         Flower flower = flowerService.getFlowerById(id);
         return ResponseEntity.ok(flower);
+    }
+
+
+
+
+    @CrossOrigin(origins = "http://localhost:3000/flowers/images")
+    @GetMapping("/flowers/images")
+    public List<byte[]> getAllImages() {
+        return flowerService.getAllImages();
     }
 
 }

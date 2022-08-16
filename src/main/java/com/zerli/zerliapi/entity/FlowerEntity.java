@@ -5,6 +5,8 @@ import lombok.Data;
 
 
 import javax.persistence.*;
+import java.sql.Blob;
+
 
 @Entity
 @Data
@@ -15,4 +17,6 @@ public class FlowerEntity {
     private Long id;
     private String description;
     private Float price;
+    @Lob
+    private byte[] image;
 }
