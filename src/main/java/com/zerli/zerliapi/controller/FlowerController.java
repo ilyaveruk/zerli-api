@@ -6,7 +6,6 @@ import com.zerli.zerliapi.services.FlowerService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Blob;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -31,6 +30,8 @@ public class FlowerController {
         Flower flower = flowerService.getFlowerById(id);
         return ResponseEntity.ok(flower);
     }
+
+
 
 
 }
