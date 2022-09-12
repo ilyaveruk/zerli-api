@@ -1,20 +1,28 @@
 package com.zerli.zerliapi.entity;
 
+import com.zerli.zerliapi.model.Role;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collection;
 
 @Entity
 @Data
-@Table(name = "user")
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String name;
     private String username;
     private String password;
-    private String role;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Collection<RoleEntity> roles = new ArrayList<>();
 
     @Override
     public String toString() {
@@ -22,7 +30,7 @@ public class UserEntity {
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
-                ", role='" + role + '\'' +
+                ", role='" + roles + '\'' +
                 '}';
     }
 }
