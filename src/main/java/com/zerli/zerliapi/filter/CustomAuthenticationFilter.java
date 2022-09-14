@@ -3,6 +3,7 @@ package com.zerli.zerliapi.filter;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zerli.zerliapi.entity.UserEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -33,12 +34,27 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
+        UserEntity userEntity;
+        try {
+            userEntity = new ObjectMapper().readValue(request.getInputStream(), UserEntity.class);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        String username = userEntity.getUsername();
+        String password = userEntity.getPassword();
         log.info("Username is: " + username);
         log.info("Password is: " + password);
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
         return authenticationManager.authenticate(authenticationToken);
+    }
+
+    @Override
+    public void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
+        Map<String, String> error = new HashMap<>();
+        error.put("error_message", failed.getMessage());
+        response.setContentType("application/json");
+        response.setStatus(401);
+        new ObjectMapper().writeValue(response.getOutputStream(), error);
     }
 
     @Override
