@@ -52,6 +52,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    public RoleEntity getRole(String username) {
+        return roleRepository.findByName(username);
+    }
+
+    @Override
     public List<UserEntity> getUsers() {
         return userRepository.findAll();
     }

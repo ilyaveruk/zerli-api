@@ -11,6 +11,7 @@ import com.zerli.zerliapi.entity.UserEntity;
 import com.zerli.zerliapi.services.UserService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -31,6 +32,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RestController
 @RequestMapping("/api/v1/")
 @RequiredArgsConstructor
+@Slf4j
 public class UserController {
     private final UserService userService;
 
@@ -41,9 +43,19 @@ public class UserController {
     }
 
     @PostMapping("/users/save")
-    public ResponseEntity<UserEntity> saveUser(@RequestBody UserEntity user) {
+    public ResponseEntity<UserEntity> saveUser(HttpServletRequest request, HttpServletResponse response) {
+        UserEntity userEntity;
+        try {
+            userEntity = new ObjectMapper().readValue(request.getInputStream(), UserEntity.class);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        String username = userEntity.getUsername();
+        String password = userEntity.getPassword();
+
+        log.info("Register successful for user:{} , {}", username,password);
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/v1/users/save").toUriString());
-        return ResponseEntity.created(uri).body(userService.saveUser(user));
+        return ResponseEntity.created(uri).body(userService.saveUser(userEntity));
     }
 
     @PostMapping("/role/save")

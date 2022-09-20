@@ -11,6 +11,8 @@ public interface UserService {
     RoleEntity saveRole(RoleEntity role);
     void addRoleToUser(String username, String roleName);
     UserEntity getUser(String username);
+
+    RoleEntity getRole(String username);
     List<UserEntity> getUsers();
 
 }
