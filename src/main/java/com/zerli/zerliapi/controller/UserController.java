@@ -42,6 +42,12 @@ public class UserController {
         return ResponseEntity.ok().body(users);
     }
 
+    @GetMapping("/users/{username}")
+    public ResponseEntity<UserEntity> getUserById(@PathVariable String username) {
+        UserEntity user = userService.getUser(username);
+        return ResponseEntity.ok().body(user);
+    }
+
     @PostMapping("/users/save")
     public ResponseEntity<UserEntity> saveUser(HttpServletRequest request, HttpServletResponse response) {
         UserEntity userEntity;
@@ -52,7 +58,7 @@ public class UserController {
         }
         String username = userEntity.getUsername();
         String password = userEntity.getPassword();
-
+        userEntity.getRoles().add(new RoleEntity(1L,"ROLE_USER"));
         log.info("Register successful for user:{} , {}", username,password);
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/v1/users/save").toUriString());
         return ResponseEntity.created(uri).body(userService.saveUser(userEntity));

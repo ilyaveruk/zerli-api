@@ -45,7 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         customAuthenticationFilter.setFilterProcessesUrl("/api/v1/login"); //TODO: added cors() and() maybe delete
         http.cors().and().csrf().disable();
         http.sessionManagement().sessionCreationPolicy(STATELESS);
-        http.authorizeRequests().antMatchers("/api/v1/login/**", "/token/refresh/**", "/api/v1/flowers","/api/v1/users/save").permitAll();
+        http.authorizeRequests().antMatchers("/api/v1/login/**", "/token/refresh/**", "/api/v1/flowers","/api/v1/users/save","/api/v1/users/**").permitAll();///api/v1/users will be erased from here in future
         http.authorizeRequests().antMatchers(GET, "/api/v1/users/**").hasAnyAuthority("ROLE_USER");
         http.authorizeRequests().antMatchers(POST, "/api/v1/users/save/**").hasAnyAuthority("ROLE_ADMIN");
         http.authorizeRequests().anyRequest().authenticated();
