@@ -30,6 +30,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 
 @RestController
+@CrossOrigin
 @RequestMapping("/api/v1/")
 @RequiredArgsConstructor
 @Slf4j

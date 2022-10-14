@@ -5,7 +5,7 @@ import com.zerli.zerliapi.entity.UserEntity;
 import com.zerli.zerliapi.model.User;
 import com.zerli.zerliapi.repository.RoleRepository;
 import com.zerli.zerliapi.repository.UserRepository;
-import javafx.print.Collation;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
